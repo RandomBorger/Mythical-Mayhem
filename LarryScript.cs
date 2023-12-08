@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 
 public class LarryScript : MonoBehaviour
 {
@@ -41,81 +42,79 @@ public class LarryScript : MonoBehaviour
 
                 myRigidBody.velocity = new Vector2(myRigidBody.velocity.x / 1.7f, myRigidBody.velocity.y);
             }
-            if (!IsGrounded())
-            {
-                myRigidBody.velocity = new Vector2(math.max(myRigidBody.velocity.x / 1.2f, -10) - horizantal, myRigidBody.velocity.y);
-            }
-            else
-            {
-                myRigidBody.velocity = new Vector2(math.max(myRigidBody.velocity.x, -20) - horizantal, myRigidBody.velocity.y);
-            }
 
-        } else if ((Input.GetKey(KeyCode.D) == true))
+                myRigidBody.velocity = new Vector2(math.max(myRigidBody.velocity.x, -20) - horizantal, myRigidBody.velocity.y);
+     
+
+        }
+        else if ((Input.GetKey(KeyCode.D) == true))
         {
             direction1 = "right";
-           
+
             if (ogdirection != direction1)
             {
                 myRigidBody.velocity = new Vector2(myRigidBody.velocity.x / 1.7f, myRigidBody.velocity.y);
-            }
-            if (!IsGrounded())
-            {
-                myRigidBody.velocity = new Vector2(math.min(myRigidBody.velocity.x/ 1.2f, 10) + horizantal, myRigidBody.velocity.y);
-            } else
-            {
+            }            
                 myRigidBody.velocity = new Vector2(math.min(myRigidBody.velocity.x, 20) + horizantal, myRigidBody.velocity.y);
-            }
-            
-        } else
+
+        }
+        else
         {
             facedir = 0;
         }
         //Jumping
         if (Input.GetKeyDown(KeyCode.Space) && mjump < maxjumps)
-       {
+        {
             mjump += 1;
             Debug.Log("Jump");
             myRigidBody.velocity = new Vector2(myRigidBody.velocity.x, jumpstrenght);
 
-       }
-       //Resetting
-       if (Input.GetKeyDown(KeyCode.R))
-       {
+        }
+        //Resetting
+        if (Input.GetKeyDown(KeyCode.R))
+        {
             if (ogdirection! != "left")
             {
                 dirtoint = 180;
-            } else
+            }
+            else
             {
                 dirtoint = 0;
             }
-        
-            myRigidBody.transform.SetLocalPositionAndRotation( new Vector2(0,0), new Quaternion(
-                0, 
-                dirtoint, 
+
+            myRigidBody.transform.SetLocalPositionAndRotation(new Vector2(0, 0), new Quaternion(
+                0,
+                dirtoint,
                 0,
                 0
-            )) ;
-            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x/10, myRigidBody.velocity.y/10);
-       }
-       //Turning
-       if (ogdirection !!= direction1)
-       {
-            facedir = 180; 
-       }
-       if (IsGrounded())
-       {
+            ));
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x / 10, myRigidBody.velocity.y / 10);
+        }
+        //Turning
+        if (ogdirection! != direction1)
+        {
+            facedir = 180;
+        }
+        if (IsGrounded())
+        {
             mjump = 0;
-       }
+        }
 
-       
-       myRigidBody.transform.Rotate(0, facedir, 0);
-       facedir = 0;
+
+        myRigidBody.transform.Rotate(0, facedir, 0);
+        facedir = 0;
     }
+
     private void FixedUpdate()
-    {
-        myRigidBody.velocity = new Vector2(myRigidBody.velocity.x * 0.95f, myRigidBody.velocity.y);
+    {   
+        if (Input.GetKey(KeyCode.Space) || myRigidBody.velocity.y < 0)
+        {
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x * 0.99f, myRigidBody.velocity.y);
+        } else
+        {
+            myRigidBody.velocity = new Vector2(myRigidBody.velocity.x * 0.99f, myRigidBody.velocity.y * 0.95f);
+        }
     }
-
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
