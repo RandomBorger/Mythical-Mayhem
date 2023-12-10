@@ -1,5 +1,5 @@
 # Mythical-Mayhem
-This is a fun project for me and somr friends (RandomBurger, the dev, Governor Booch, art & Yeg geg, storyboard) to work on.
+This is a fun project for me and somr friends (RandomBurger, the dev, Governor Booch, art & Yeg geg, game design) to work on.
 The Goal is to succesfully learn C# and hopefully make a game.
 There is yet any legal yady yadda to be written down.
 Mythical mayhem intends to be an indie game that can be played in two different modes.
